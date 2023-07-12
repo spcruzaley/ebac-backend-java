@@ -24,6 +24,8 @@ public class Contexto {
         operacionConUsuarios();
         operacionConTelefonos();
         //operacionConDirecciones();
+
+        connection.close();
     }
 
     public static void operacionConUsuarios() throws SQLException {
