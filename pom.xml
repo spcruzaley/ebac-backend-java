@@ -34,6 +34,13 @@
             <artifactId>mongodb-driver-sync</artifactId>
             <version>4.9.0</version>
         </dependency>
+
+        <!-- Dependencia de Spring Framework (Core y Context) -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>5.3.9</version>
+        </dependency>
     </dependencies>
 
 </project>
