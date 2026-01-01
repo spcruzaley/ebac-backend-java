@@ -1,8 +1,10 @@
 package com.ebac.modulo34;
 
 import com.ebac.modulo33.MysqlConnection;
+import com.ebac.modulo34.dto.Direccion;
 import com.ebac.modulo34.dto.Telefono;
 import com.ebac.modulo34.dto.Usuario;
+import com.ebac.modulo34.model.DireccionModel;
 import com.ebac.modulo34.model.TelefonoModel;
 import com.ebac.modulo34.model.UsuarioModel;
 
@@ -14,7 +16,7 @@ public class Contexto {
     static Connection connection;
 
     public static void main(String[] args) throws SQLException {
-        String url = "jdbc:mysql://localhost:3306/modulo34";
+        String url = "jdbc:mysql://localhost:3307/BD1";
         String user = "root";
         String password = "root";
 
@@ -22,8 +24,8 @@ public class Contexto {
         connection = mysqlConnection.getConnection(url, user, password);
 
         operacionConUsuarios();
-        operacionConTelefonos();
-        //operacionConDirecciones();
+        //operacionConTelefonos();
+        operacionConDirecciones();
 
         connection.close();
     }
@@ -68,8 +70,24 @@ public class Contexto {
         System.out.println(telefonoEnDB);
     }
 
-    public static void operacionConDirecciones() {
-        // TODO Implementar algunas operaciones
+    public static void operacionConDirecciones() throws SQLException {
+        System.out.println("------------------OPERACION CON DIRECCIONES------------------------------------");
+        Direccion direccion = crearDireccion(6, "Agustin Mendez", 123, "Monterrey", 47889);
+
+        DireccionModel dModel = new DireccionModel(connection);
+        //insertar
+        dModel.guardar(direccion);
+        Direccion dEnDB = dModel.obtenerPorId(2);
+        System.out.println(dEnDB);
+        //eliminar
+        int direccionEliminada = dModel.eliminarPorId(4);
+        System.out.println(dModel.obtenerPorId(direccionEliminada));
+        //actualizar
+        Direccion direccionParaActualizar = crearDireccion(5, "Avenida Universidad", 412, "Tamaulipas", 44711);
+
+        Direccion dact = dModel.actualizarPorId(direccionParaActualizar);
+        System.out.println(dact);
+
     }
 
     private static Usuario crearUsuario(String nombre, int edad) {
@@ -87,5 +105,16 @@ public class Contexto {
         telefono.setTipo(tipo);
 
         return telefono;
+    }
+
+    private static Direccion crearDireccion(int idDireccion, String calle, int numero, String estado, int CP){
+        Direccion direccion = new Direccion();
+        direccion.setIdDireccion(idDireccion);
+        direccion.setCalle(calle);
+        direccion.setNumero(numero);
+        direccion.setEstado(estado);
+        direccion.setCP(CP);
+
+        return direccion;
     }
 }
