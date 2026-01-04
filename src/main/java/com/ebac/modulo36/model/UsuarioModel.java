@@ -17,6 +17,7 @@ public class UsuarioModel {
     private final MongoCollection<Document> collection;
 
     public UsuarioModel(MongoDatabase database) {
+
         collection = database.getCollection("usuarios");
     }
 
